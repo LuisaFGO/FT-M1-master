@@ -11,11 +11,57 @@
 // search: Busca un valor dentro de la lista. Puede recibir un valor o una función. Si no hubiera resultados, devuelve null.
 
 function LinkedList() {
-
+  this._length = 0;
+  this.head = null;
 }
 
 function Node(value){
+  this.value = value;
+  this.next = null;
+}
 
+LinkedList.prototype.add= function(data){
+   var node= new Node(data);
+   var current = this.head;
+   if(!current){
+    //this.head = node;
+    //this._length++;
+    //return node;
+    return this.head= node;
+   }
+   while(current.next){
+      current = current.next;
+   }
+   current.next = node;
+   this._length++;
+   return node;
+}
+
+LinkedList.prototype.remove= function(){
+  if(!this.head)return null;//esta vacio
+  if(this.head.next=== null){//si solo hay uno
+     var valor = this.head.value;
+     this.head = null;
+     return valor;
+  }var current = this.head;
+  while(current.next.next){//si tiene más de un elemento
+    current = current.next;
+    }
+    var valor = current.next.value;
+    current.next =null;
+    return valor;
+}
+LinkedList.prototype.search= function(valor){
+  var current = this.head;
+  if(!current)return null;
+  while(current){
+    if(typeof valor === 'function'){
+      if(valor(current.value))return current.value;
+    }else{
+      if(current.value === valor)return valor;
+    }current = current.next;
+  }
+    return null;
 }
 
 // Hash Table( ver información en: https://es.wikipedia.org/wiki/Tabla_hash)
@@ -31,8 +77,36 @@ function Node(value){
 //    - Retornar dicho valor.
 
 function HashTable() {
-
+  this.numBuckets= 35;
+  this.buckets = [];
 }
+HashTable.prototype.hash = function(valor){
+  var acum =0;
+  for(var i=0; i<valor.length; i++){
+    acum += valor.charCodeAt(i);
+  }
+  return acum % this.numBuckets;
+}
+
+HashTable.prototype.set = function(clave, valor){
+  if(typeof clave !== 'string') throw new TypeError('Keys must be strings');
+  var casillero= this.hash(clave);
+  if(!this.buckets[casillero]){
+    this.buckets[casillero]= {};
+  }
+  this.buckets[casillero][clave] = valor;
+}
+HashTable.prototype.get = function(clave){
+  var casillero= this.hash(clave);
+  return this.buckets[casillero][clave];
+}
+HashTable.prototype.hasKey = function(clave){
+  var casillero= this.hash(clave);
+  return !!this.buckets[casillero][clave];
+  // return this.buckets[casillero].hasOwnProperty(clave);
+}
+
+
 
 
 // No modifiquen nada debajo de esta linea
