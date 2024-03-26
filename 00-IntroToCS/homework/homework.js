@@ -20,12 +20,12 @@ function DecimalABinario(num) {
   // tu codigo aca
   // Dividir el numero con 2 hasta llegar a 0
   // Guardarlo en una variable al contrario
-  // var binario=[];
-  // while(num>0){
-  //   binario.unshift(num%2);
-  //   num = Math.floor(num/2);
-  // }
-  // return binario.join('');
+  var binario=[];
+  while(num>0){
+    binario.unshift(num%2);
+    num = Math.floor(num/2);
+  }
+  return binario.join('');
   /*otra forma
   var binario="";
   while(num>0){
